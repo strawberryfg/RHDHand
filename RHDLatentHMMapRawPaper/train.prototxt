@@ -1,0 +1,3099 @@
+name: "RHDLatentHMMapRawPaper"
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_0"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_0"
+  gen_rand_index_param {
+     index_lower_bound: 0
+	 index_upper_bound: 10000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_1"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_1"
+  gen_rand_index_param {
+     index_lower_bound: 10001
+	 index_upper_bound: 20000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_2"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_2"
+  gen_rand_index_param {
+     index_lower_bound: 20001
+	 index_upper_bound: 30000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_3"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_3"
+  gen_rand_index_param {
+     index_lower_bound: 30001
+	 index_upper_bound: 40000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_4"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_4"
+  gen_rand_index_param {
+     index_lower_bound: 40001
+	 index_upper_bound: 50000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_5"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_5"
+  gen_rand_index_param {
+     index_lower_bound: 50001
+	 index_upper_bound: 60000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_6"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_6"
+  gen_rand_index_param {
+     index_lower_bound: 60001
+	 index_upper_bound: 70000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_7"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_7"
+  gen_rand_index_param {
+     index_lower_bound: 70001
+	 index_upper_bound: 80000
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index_8"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index_8"
+  gen_rand_index_param {
+     index_lower_bound: 80001
+	 index_upper_bound: 82515
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+#-----Concat the indexes leave image_index_4 out
+layer {
+  name: "image_index_concat"
+  type: "Concat"
+  bottom: "image_index_0"
+  bottom: "image_index_1"
+  bottom: "image_index_2"
+  bottom: "image_index_3"
+  bottom: "image_index_4"
+  bottom: "image_index_5"
+  bottom: "image_index_6"
+  bottom: "image_index_7"
+  bottom: "image_index_8"
+  
+  top: "image_index_concat"
+  include {
+     phase: TRAIN
+  }
+}
+
+
+#-----Random choose from one index
+layer {
+  name: "image_index"
+  type: "CrossValidationRandomChooseIndex"
+  bottom: "image_index_concat"
+  top: "image_index"
+  include {
+     phase: TRAIN
+  }
+}
+
+
+
+
+
+#-----Generate random image index for training 0
+layer {
+  name: "image_index"
+  type: "DeepHandModelGenRandIndex"
+  top: "image_index"
+  gen_rand_index_param {
+     index_lower_bound: 0
+	 index_upper_bound: 5455
+	 batch_size: 32
+     missing_index_file: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\missing_left_new.txt"
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+
+
+
+
+
+#----- Read 
+layer {
+  name: "readimage"
+  type: "ReadImage"
+  bottom: "image_index"
+  top: "image"
+  read_image_param {
+     read_path: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\crop_image\\"
+	 resize_size: 128
+	 zero_pad: 0
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+#----- Read 
+layer {
+  name: "readimage"
+  type: "ReadImage"
+  bottom: "image_index"
+  top: "image"
+  read_image_param {
+     read_path: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\crop_image\\"
+	 resize_size: 128
+	 zero_pad: 0
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+#----- Read raw image index
+layer {
+  name: "read_raw_image_index"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "raw_image_index"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\image_index\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+#----- Read raw image index
+layer {
+  name: "read_raw_image_index"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "raw_image_index"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\image_index\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+
+#----- Read avg bone
+layer {
+  name: "avg_bone"
+  type: "ReadBlobFromFile"
+  top: "avg_bone"
+  read_blob_from_file_param {
+     file_path: "D:\\handpose\\CalcRHDBoneStats\\avg_bone.txt"
+	 num_to_read: 20
+	 batch_size: 32
+  }  
+}
+
+#-----read bbx x1
+layer {
+  name: "bbx_x1"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_x1"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\bbx_x1\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+#-----read bbx x1
+layer {
+  name: "bbx_x1"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_x1"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\bbx_x1\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+
+
+
+#-----read bbx y1
+layer {
+  name: "bbx_y1"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_y1"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\bbx_y1\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+#-----read bbx y1
+layer {
+  name: "bbx_y1"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_y1"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\bbx_y1\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+
+
+
+#-----read bbx x2
+layer {
+  name: "bbx_x2"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_x2"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\bbx_x2\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+#-----read bbx x2
+layer {
+  name: "bbx_x2"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_x2"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\bbx_x2\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+
+
+
+#-----read bbx y2
+layer {
+  name: "bbx_y2"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_y2"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\bbx_y2\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+#-----read bbx y2
+layer {
+  name: "bbx_y2"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "bbx_y2"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\bbx_y2\\"
+	 num_to_read: 1
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+#----gen bbx_x2 - bbx_x1 
+layer {
+  bottom: "bbx_x1"
+  top: "neg_bbx_x1"
+  type: "ScaleVector"
+  name: "neg_bbx_x1"
+  scale_vector_param {
+     scale_factor: -1.0
+  }
+}
+
+
+#----gen bbx_y2 - bbx_y1 
+layer {
+  bottom: "bbx_y1"
+  top: "neg_bbx_y1"
+  type: "ScaleVector"
+  name: "neg_bbx_y1"
+  scale_vector_param {
+     scale_factor: -1.0
+  }
+}
+
+layer {
+  bottom: "bbx_x2"
+  bottom: "neg_bbx_x1"
+  top: "width"
+  name: "width"
+  type: "Eltwise"
+}
+
+
+layer {
+  bottom: "bbx_y2"
+  bottom: "neg_bbx_y1"
+  top: "height"
+  name: "height"
+  type: "Eltwise"
+}
+
+
+
+#-----read camera k 3*3
+layer {
+  name: "read_camera_k"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "raw_image_index"
+  top: "camera_k"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\matlab_gt_camera_k\\"
+	 num_to_read: 9
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+#-----read camera k 3*3
+layer {
+  name: "read_camera_k"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "raw_image_index"
+  top: "camera_k"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\matlab_gt_camera_k\\"
+	 num_to_read: 9
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+
+#-----slice to fx 0 u0 0 fy v0 0 0 1
+layer {
+  name: "slice_camera_k"
+  bottom: "camera_k"
+  top: "fx"
+  top: "zero_0"
+  top: "u0"
+  top: "zero_1"
+  top: "fy"
+  top: "v0"
+  top: "zero_2"
+  top: "zero_3"
+  top: "one"
+  type: "Slice"
+  slice_param {
+     axis: 1
+	 slice_point: 1
+	 slice_point: 2
+	 slice_point: 3
+	 slice_point: 4
+	 slice_point: 5
+	 slice_point: 6
+	 slice_point: 7
+	 slice_point: 8
+  }
+}
+
+layer {
+  bottom: "zero_0"
+  bottom: "zero_1"
+  top: "nothing_0"
+  name: "nothing_0"
+  type: "EuclideanLoss"
+  loss_weight: 0.0
+}
+
+layer {
+  bottom: "zero_2"
+  bottom: "zero_3"
+  top: "nothing_1"
+  name: "nothing_1"
+  type: "EuclideanLoss"
+  loss_weight: 0.0
+}
+
+layer {
+  bottom: "zero_2"
+  bottom: "one"
+  top: "nothing_2"
+  name: "nothing_2"
+  type: "EuclideanLoss"  
+  loss_weight: 0.0
+}
+
+#----- Read crop gt 2d
+layer {
+  name: "read_gt_2d"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "gt_joint_2d"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\crop_gt_2d\\"
+	 num_to_read: 42
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+#----- Read crop gt 2d
+layer {
+  name: "read_gt_2d"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "gt_joint_2d"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\crop_gt_2d\\"
+	 num_to_read: 42
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+#----- Read gt
+layer {
+  name: "read_gt_3d_read"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "gt_joint_3d_read"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\training\\all_hand\\gt_3d\\"
+	 num_to_read: 63
+  }
+  include {
+     phase: TRAIN
+  }
+}
+
+
+#----- Read gt
+layer {
+  name: "read_gt_3d_read"
+  type: "ReadBlobFromFileIndexing"
+  bottom: "image_index"
+  top: "gt_joint_3d_read"
+  read_blob_from_file_indexing_param {
+     file_prefix: "C:\\RHD_v1-1\\RHD_published_v2\\evaluation\\all_hand\\gt_3d\\"
+	 num_to_read: 63
+  }
+  include {
+     phase: TEST
+  }
+}
+
+
+
+#-----gt 3d vector / 1000.0
+layer {
+  name: "gt_joint_3d"
+  bottom: "gt_joint_3d_read"
+  top: "gt_joint_3d"
+  type: "ScaleVector"
+  scale_vector_param {
+    scale_factor: 0.001
+  }
+}
+
+#------to compute scale for ground truth s 
+layer {
+  bottom: "gt_joint_3d"
+  top: "gt_norm_scale"
+  name: "gt_norm_scale"
+  type: "DeepHandModelCalcNormScale"
+}
+
+
+
+
+#----slice to root and other joints root_RHD = 0
+layer {
+  name: "slice_gt_joint_3d"
+  type: "Slice"
+  bottom: "gt_joint_3d"
+  top: "gt_root"
+  top: "gt_other_joint"
+  slice_param {
+     axis: 1
+	 slice_point: 3
+  }
+}
+
+#---nothing
+layer {
+  bottom: "gt_other_joint"
+  bottom: "gt_other_joint"
+  top: "nothing_gt_other_joint"
+  type: "EuclideanLoss"
+  loss_weight: 0.0
+}
+
+#----take negative of gt root (3-d)
+layer {
+  bottom: "gt_root"
+  top: "neg_gt_root"
+  type: "ScaleVector"
+  scale_vector_param {
+    scale_factor: -1.0
+  }
+}
+
+#-----slice gt_joint_3d to all 
+layer {
+  bottom: "gt_joint_3d"
+  top: "gt_joint_3d_0_x"
+  top: "gt_joint_3d_0_y"
+  top: "gt_joint_3d_0_z"
+  top: "gt_joint_3d_1_x"
+  top: "gt_joint_3d_1_y"
+  top: "gt_joint_3d_1_z"
+  top: "gt_joint_3d_2_x"
+  top: "gt_joint_3d_2_y"
+  top: "gt_joint_3d_2_z"
+  top: "gt_joint_3d_3_x"
+  top: "gt_joint_3d_3_y"
+  top: "gt_joint_3d_3_z"
+  top: "gt_joint_3d_4_x"
+  top: "gt_joint_3d_4_y"
+  top: "gt_joint_3d_4_z"
+  top: "gt_joint_3d_5_x"
+  top: "gt_joint_3d_5_y"
+  top: "gt_joint_3d_5_z"
+  top: "gt_joint_3d_6_x"
+  top: "gt_joint_3d_6_y"
+  top: "gt_joint_3d_6_z"
+  top: "gt_joint_3d_7_x"
+  top: "gt_joint_3d_7_y"
+  top: "gt_joint_3d_7_z"
+  top: "gt_joint_3d_8_x"
+  top: "gt_joint_3d_8_y"
+  top: "gt_joint_3d_8_z"
+  top: "gt_joint_3d_9_x"
+  top: "gt_joint_3d_9_y"
+  top: "gt_joint_3d_9_z"
+  top: "gt_joint_3d_10_x"
+  top: "gt_joint_3d_10_y"
+  top: "gt_joint_3d_10_z"
+  top: "gt_joint_3d_11_x"
+  top: "gt_joint_3d_11_y"
+  top: "gt_joint_3d_11_z"
+  top: "gt_joint_3d_12_x"
+  top: "gt_joint_3d_12_y"
+  top: "gt_joint_3d_12_z"
+  top: "gt_joint_3d_13_x"
+  top: "gt_joint_3d_13_y"
+  top: "gt_joint_3d_13_z"
+  top: "gt_joint_3d_14_x"
+  top: "gt_joint_3d_14_y"
+  top: "gt_joint_3d_14_z"
+  top: "gt_joint_3d_15_x"
+  top: "gt_joint_3d_15_y"
+  top: "gt_joint_3d_15_z"
+  top: "gt_joint_3d_16_x"
+  top: "gt_joint_3d_16_y"
+  top: "gt_joint_3d_16_z"
+  top: "gt_joint_3d_17_x"
+  top: "gt_joint_3d_17_y"
+  top: "gt_joint_3d_17_z"
+  top: "gt_joint_3d_18_x"
+  top: "gt_joint_3d_18_y"
+  top: "gt_joint_3d_18_z"
+  top: "gt_joint_3d_19_x"
+  top: "gt_joint_3d_19_y"
+  top: "gt_joint_3d_19_z"
+  top: "gt_joint_3d_20_x"
+  top: "gt_joint_3d_20_y"
+  top: "gt_joint_3d_20_z"
+  type: "Slice"
+  slice_param {
+     axis: 1
+	 slice_point: 1
+	 slice_point: 2
+	 slice_point: 3
+	 slice_point: 4
+	 slice_point: 5
+	 slice_point: 6
+	 slice_point: 7
+	 slice_point: 8
+	 slice_point: 9
+	 slice_point: 10
+	 slice_point: 11
+	 slice_point: 12
+	 slice_point: 13
+	 slice_point: 14
+	 slice_point: 15
+	 slice_point: 16
+	 slice_point: 17
+	 slice_point: 18
+	 slice_point: 19
+	 slice_point: 20
+	 slice_point: 21
+	 slice_point: 22
+	 slice_point: 23
+	 slice_point: 24
+	 slice_point: 25
+	 slice_point: 26
+	 slice_point: 27
+	 slice_point: 28
+	 slice_point: 29
+	 slice_point: 30
+	 slice_point: 31
+	 slice_point: 32
+	 slice_point: 33
+	 slice_point: 34
+	 slice_point: 35
+	 slice_point: 36
+	 slice_point: 37
+	 slice_point: 38
+	 slice_point: 39
+	 slice_point: 40
+	 slice_point: 41
+	 slice_point: 42
+	 slice_point: 43
+	 slice_point: 44
+	 slice_point: 45
+	 slice_point: 46
+	 slice_point: 47
+	 slice_point: 48
+	 slice_point: 49
+	 slice_point: 50
+	 slice_point: 51
+	 slice_point: 52
+	 slice_point: 53
+	 slice_point: 54
+	 slice_point: 55
+	 slice_point: 56
+	 slice_point: 57
+	 slice_point: 58
+	 slice_point: 59
+	 slice_point: 60
+	 slice_point: 61
+	 slice_point: 62
+  } 
+}
+
+#----concat x component
+layer {
+  bottom: "gt_joint_3d_0_x"
+  bottom: "gt_joint_3d_1_x"
+  bottom: "gt_joint_3d_2_x"
+  bottom: "gt_joint_3d_3_x"
+  bottom: "gt_joint_3d_4_x"
+  bottom: "gt_joint_3d_5_x"
+  bottom: "gt_joint_3d_6_x"
+  bottom: "gt_joint_3d_7_x"
+  bottom: "gt_joint_3d_8_x"
+  bottom: "gt_joint_3d_9_x"
+  bottom: "gt_joint_3d_10_x"
+  bottom: "gt_joint_3d_11_x"
+  bottom: "gt_joint_3d_12_x"
+  bottom: "gt_joint_3d_13_x"
+  bottom: "gt_joint_3d_14_x"
+  bottom: "gt_joint_3d_15_x"
+  bottom: "gt_joint_3d_16_x"
+  bottom: "gt_joint_3d_17_x"
+  bottom: "gt_joint_3d_18_x"
+  bottom: "gt_joint_3d_19_x"
+  bottom: "gt_joint_3d_20_x"
+  top: "gt_joint_3d_x"
+  name: "gt_joint_3d_x"
+  type: "Concat"
+}
+
+
+
+#----concat y component
+layer {
+  bottom: "gt_joint_3d_0_y"
+  bottom: "gt_joint_3d_1_y"
+  bottom: "gt_joint_3d_2_y"
+  bottom: "gt_joint_3d_3_y"
+  bottom: "gt_joint_3d_4_y"
+  bottom: "gt_joint_3d_5_y"
+  bottom: "gt_joint_3d_6_y"
+  bottom: "gt_joint_3d_7_y"
+  bottom: "gt_joint_3d_8_y"
+  bottom: "gt_joint_3d_9_y"
+  bottom: "gt_joint_3d_10_y"
+  bottom: "gt_joint_3d_11_y"
+  bottom: "gt_joint_3d_12_y"
+  bottom: "gt_joint_3d_13_y"
+  bottom: "gt_joint_3d_14_y"
+  bottom: "gt_joint_3d_15_y"
+  bottom: "gt_joint_3d_16_y"
+  bottom: "gt_joint_3d_17_y"
+  bottom: "gt_joint_3d_18_y"
+  bottom: "gt_joint_3d_19_y"
+  bottom: "gt_joint_3d_20_y"
+  top: "gt_joint_3d_y"
+  name: "gt_joint_3d_y"
+  type: "Concat"
+}
+
+
+#----concat z component
+layer {
+  bottom: "gt_joint_3d_0_z"
+  bottom: "gt_joint_3d_1_z"
+  bottom: "gt_joint_3d_2_z"
+  bottom: "gt_joint_3d_3_z"
+  bottom: "gt_joint_3d_4_z"
+  bottom: "gt_joint_3d_5_z"
+  bottom: "gt_joint_3d_6_z"
+  bottom: "gt_joint_3d_7_z"
+  bottom: "gt_joint_3d_8_z"
+  bottom: "gt_joint_3d_9_z"
+  bottom: "gt_joint_3d_10_z"
+  bottom: "gt_joint_3d_11_z"
+  bottom: "gt_joint_3d_12_z"
+  bottom: "gt_joint_3d_13_z"
+  bottom: "gt_joint_3d_14_z"
+  bottom: "gt_joint_3d_15_z"
+  bottom: "gt_joint_3d_16_z"
+  bottom: "gt_joint_3d_17_z"
+  bottom: "gt_joint_3d_18_z"
+  bottom: "gt_joint_3d_19_z"
+  bottom: "gt_joint_3d_20_z"
+  top: "gt_joint_3d_z"
+  name: "gt_joint_3d_z"
+  type: "Concat"
+}
+
+
+layer {
+  type: "Slice"
+  bottom: "neg_gt_root"
+  top: "neg_gt_root_x"
+  top: "neg_gt_root_y"
+  top: "neg_gt_root_z"
+  slice_param {
+     axis: 1
+	 slice_point: 1
+	 slice_point: 2
+  }
+}
+
+#---- minus root x to get rel x
+layer {
+  type: "AddVectorBySingleVector"
+  bottom: "gt_joint_3d_x"
+  bottom: "neg_gt_root_x"
+  top: "gt_rel_x"
+  name: "gt_rel_x"
+}
+
+
+#---- minus root y to get rel y
+layer {
+  type: "AddVectorBySingleVector"
+  bottom: "gt_joint_3d_y"
+  bottom: "neg_gt_root_y"
+  top: "gt_rel_y"
+  name: "gt_rel_y"
+}
+
+
+#---- minus root z to get rel z
+layer {
+  type: "AddVectorBySingleVector"
+  bottom: "gt_joint_3d_z"
+  bottom: "neg_gt_root_z"
+  top: "gt_rel_z"
+  name: "gt_rel_z"
+}
+
+
+
+#-----ignore gt rel 3d x & y (root-relative 3d w/o normed)
+layer {
+  bottom: "gt_rel_x"
+  bottom: "gt_rel_y"
+  top: "euc_gt_rel_xy"
+  name: "euc_gt_rel_xy"
+  type: "EuclideanLoss"
+  loss_weight: 0.0
+}
+
+#----- zkr[j] * C / s
+
+layer {
+  bottom: "gt_rel_z"
+  bottom: "gt_norm_scale"
+  type: "ScaleVectorBySingleVector"
+  top: "gt_rel_z_scale_norm"
+  name: "gt_rel_z_scale_norm"
+}
+
+
+#---- + -minz
+layer {
+  type: "AddVectorByConstant"
+  bottom: "gt_rel_z_scale_norm"
+  
+  top: "gt_rel_z_scale_norm_minus_minz"  
+  name: "gt_rel_z_scale_norm_minus_minz"
+  add_vector_by_constant_param {
+    add_value: 3.26900 #- (-3.26900) 
+  }
+}
+
+#----- / (maxz - minz)
+layer {
+  type: "ScaleVector"
+  bottom: "gt_rel_z_scale_norm_minus_minz"  
+  top: "gt_rel_z_scale_norm_minus_minz_scale"  
+  name: "gt_rel_z_scale_norm_minus_minz_scale"  
+  scale_vector_param {
+    scale_factor:  0.1529285823520416  #/ (6.539)
+  }
+}
+
+
+
+
+
+
+#---gen 64x64 heatmap gt
+layer {
+    bottom : "gt_joint_2d"
+	top: "gt_64x64_hm"
+	name: "gt_64x64_hm"
+	type: "DeepHandModelGenHeatmapAllChannels"
+	deep_hand_model_gen_heatmap_all_channels_param {
+	   gen_size: 64
+	   render_sigma: 0.08
+	}
+
+}
+
+#-----generate ground truth "depth" map as in paper 
+#--Hand Pose Estimation via Latent 2.5D Heatmap Representation
+layer {
+   type: "DeepHandModelGenDepthMap"
+   bottom: "gt_64x64_hm"
+   bottom: "gt_rel_z_scale_norm_minus_minz_scale"
+   top: "gt_depth_map_64x64"
+   name: "gt_depth_map_64x64"
+   deep_hand_model_gen_depth_map_param {
+      map_size: 64
+	  joint_num: 21
+	  depth_lower_bound: 0.0
+	  depth_upper_bound: 1.0
+   }
+}
+
+
+layer {
+ bottom: "image"
+ top: "image_scale"
+ name: "image_scale"
+ type: "MulRGB"
+ mul_rgb_param {
+   mul_factor: 0.0039215686274509803921568627451
+ }
+}
+
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "image_scale"
+  top: "conv1"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+layer {
+  name: "conv1_relu"
+  type: "ReLU"
+  bottom: "conv1"
+  top: "conv1"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+	pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+
+
+
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+layer {
+  name: "conv2_relu"
+  type: "ReLU"
+  bottom: "conv2"
+  top: "conv2"
+}
+
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+	pad: 1
+    kernel_size: 3
+    stride: 1
+  }
+}
+
+
+
+layer {
+  name: "conv3"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+layer {
+  name: "conv3_relu"
+  type: "ReLU"
+  bottom: "conv3"
+  top: "conv3"
+}
+
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+	pad: 0
+    kernel_size: 2
+    stride: 2
+  }
+}
+
+
+
+
+
+layer {
+  name: "conv4"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+layer {
+  name: "conv4_relu"
+  type: "ReLU"
+  bottom: "conv4"
+  top: "conv4"
+}
+
+
+
+
+layer {
+  name: "conv5"
+  type: "Convolution"
+  bottom: "conv4"
+  top: "conv5"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+layer {
+  name: "conv5_relu"
+  type: "ReLU"
+  bottom: "conv5"
+  top: "conv5"
+}
+
+
+
+
+layer {
+  name: "conv6"
+  type: "Convolution"
+  bottom: "conv5"
+  top: "conv6"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+layer {
+  name: "conv6_relu"
+  type: "ReLU"
+  bottom: "conv6"
+  top: "conv6"
+}
+
+
+
+layer {
+  name: "conv5_shortcut"
+  type: "Convolution"
+  bottom: "conv5"
+  top: "conv5_shortcut"
+  convolution_param {
+    num_output: 512
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+
+layer {
+  name: "conv6_deconv"
+  type: "Deconvolution"
+  bottom: "conv6"
+  top: "conv6_deconv"
+  param: {
+    lr_mult: 1
+  }  param: {
+    lr_mult: 2
+  }
+  convolution_param: {
+    num_output: 512
+    pad: 1
+    kernel_size: 4
+    stride: 2
+    weight_filler: {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler: {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+layer {
+  bottom: "conv5_shortcut"
+  bottom: "conv6_deconv"
+  top: "h0_output"
+  name: "h0_output"
+  type: "Eltwise"
+}
+
+
+
+layer {
+  name: "h0_output_deconv"
+  type: "Deconvolution"
+  bottom: "h0_output"
+  top: "h0_output_deconv"
+  param: {
+    lr_mult: 1
+  }  param: {
+    lr_mult: 2
+  }
+  convolution_param: {
+    num_output: 512
+    pad: 1
+    kernel_size: 4
+    stride: 2
+    weight_filler: {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler: {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+
+
+layer {
+  name: "conv4_shortcut"
+  type: "Convolution"
+  bottom: "conv4"
+  top: "conv4_shortcut"
+  convolution_param {
+    num_output: 512
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+
+
+layer {
+  bottom: "conv4_shortcut"
+  bottom: "h0_output_deconv"
+  top: "h1_output"
+  name: "h1_output"
+  type: "Eltwise"
+}
+
+
+
+layer {
+  name: "h1_output_deconv"
+  type: "Deconvolution"
+  bottom: "h1_output"
+  top: "h1_output_deconv"
+  param: {
+    lr_mult: 1
+  }  param: {
+    lr_mult: 2
+  }
+  convolution_param: {
+    num_output: 512
+    pad: 1
+    kernel_size: 4
+    stride: 2
+    weight_filler: {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler: {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+
+
+layer {
+  name: "pool3_shortcut"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "pool3_shortcut"
+  convolution_param {
+    num_output: 512
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+
+
+
+layer {
+  bottom: "pool3_shortcut"
+  bottom: "h1_output_deconv"
+  top: "h2_output"
+  name: "h2_output"
+  type: "Eltwise"
+}
+
+
+
+
+
+layer {
+  name: "h2_output_deconv"
+  type: "Deconvolution"
+  bottom: "h2_output"
+  top: "h2_output_deconv"
+  param: {
+    lr_mult: 1
+  }  param: {
+    lr_mult: 2
+  }
+  convolution_param: {
+    num_output: 512
+    pad: 1
+    kernel_size: 4
+    stride: 2
+    weight_filler: {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler: {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+
+
+
+
+
+layer {
+  name: "conv3_shortcut"
+  type: "Convolution"
+  bottom: "conv3"
+  top: "conv3_shortcut"
+  convolution_param {
+    num_output: 512
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+
+
+
+
+layer {
+  bottom: "conv3_shortcut"
+  bottom: "h2_output_deconv"
+  top: "h3_output"
+  name: "h3_output"
+  type: "Eltwise"
+}
+
+
+
+
+
+
+layer {
+  name: "h3_output_deconv"
+  type: "Deconvolution"
+  bottom: "h3_output"
+  top: "h3_output_deconv"
+  param: {
+    lr_mult: 1
+  }  param: {
+    lr_mult: 2
+  }
+  convolution_param: {
+    num_output: 512
+    pad: 1
+    kernel_size: 4
+    stride: 2
+    weight_filler: {
+      type: "xavier"
+      std: 0.01
+    }
+    bias_filler: {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+
+
+
+
+layer {
+  name: "conv2_shortcut"
+  type: "Convolution"
+  bottom: "conv2"
+  top: "conv2_shortcut"
+  convolution_param {
+    num_output: 512
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+
+
+
+layer {
+  bottom: "conv2_shortcut"
+  bottom: "h3_output_deconv"
+  top: "h4_output"
+  name: "h4_output"
+  type: "Eltwise"
+}
+
+
+
+
+
+
+layer {
+  name: "h4_output_latent_map"
+  type: "Convolution"
+  bottom: "h4_output"
+  top: "h4_output_latent_map"
+  convolution_param {
+    num_output: 42
+    pad: 0
+    kernel_size: 1
+    stride: 1
+    bias_term: false
+    weight_filler {
+      type: "msra"
+    }
+  }
+}
+
+
+
+#-------sigmoid 
+layer {
+  bottom: "h4_output_latent_map"
+  top:    "h4_output_latent_map_sigmoid"
+  name:   "sigmoid_h4_output_latent_map"
+  type:   "Sigmoid"
+
+}
+
+
+
+
+layer {
+  bottom: "h4_output_latent_map"
+  top: "pred_64x64_hm"
+  top: "pred_64x64_depth"
+  name: "slice_64x64"
+  type: "Slice"
+  slice_param {
+     axis: 1 
+	 slice_point: 21
+  }
+}
+
+#----heatmap
+#------cross entropy loss of 
+layer {
+  bottom: "pred_64x64_hm"
+  bottom: "gt_64x64_hm"
+  type:   "SigmoidCrossEntropyLoss"
+  top:    "hm_64x64_ent"
+  name:   "hm_64x64_ent"
+  loss_weight: 1.0
+
+}
+
+
+#-------sigmoid 
+layer {
+  bottom: "pred_64x64_hm"
+  top:    "pred_64x64_hm_sigmoid"
+  name:   "sigmoid_pred_64x64_hm"
+  type:   "Sigmoid"
+
+}
+
+
+#-------Euclidean Loss of 
+layer {
+  bottom: "pred_64x64_hm_sigmoid"
+  bottom: "gt_64x64_hm"
+  type:   "EuclideanLoss"
+  top:    "hm_64x64_euc_s1"
+  name:   "hm_64x64_euc_s1"
+  loss_weight: 0.0
+}
+
+
+
+#----depth map
+#------cross entropy loss of 
+layer {
+  bottom: "pred_64x64_depth"
+  bottom: "gt_depth_map_64x64"
+  type:   "SigmoidCrossEntropyLoss"
+  top:    "depth_64x64_ent"
+  name:   "depth_64x64_ent"
+  loss_weight: 3.0
+
+}
+
+
+#-------sigmoid 
+layer {
+  bottom: "pred_64x64_depth"
+  top:    "pred_64x64_depth_sigmoid"
+  name:   "sigmoid_pred_64x64_depth"
+  type:   "Sigmoid"
+
+}
+
+
+#-------Euclidean Loss of 
+layer {
+  bottom: "pred_64x64_depth_sigmoid"
+  bottom: "gt_depth_map_64x64"
+  type:   "EuclideanLoss"
+  top:    "depth_64x64_euc_s1"
+  name:   "depth_64x64_euc_s1"
+  loss_weight: 0.0
+}
+
+
+
+
+
+layer {
+  name: "slice_map"
+  bottom: "h4_output_latent_map_sigmoid"
+  top: "latent_heatmap"
+  top: "latent_depthmap"
+  type: "Slice"
+  slice_param {
+      axis: 1
+      slice_point: 21      
+  }
+}
+
+
+
+#normalization --- generate normalized heatmap (sum of all heatmap responses equals 1.0)
+layer {
+  bottom: "latent_heatmap"
+  top: "heatmap_norm"
+  name: "norm_hm"
+  type: "DeepHandModelNormalizationResponse"  
+}
+
+#----numerical regression
+layer {
+  bottom: "heatmap_norm"
+  top: "pred_joint_2d"
+  type: "DeepHandModelNumericalCoordinateRegression"
+  name: "pred_joint_2d"
+}
+
+#supervision signal
+layer {
+  bottom: "pred_joint_2d"
+  bottom: "gt_joint_2d"
+  
+  top: "joint2dloss"
+  name: "joint2dloss"
+  type: "EuclideanLoss"
+  loss_weight: 0.0
+
+}
+
+
+
+
+
+
+
+
+#----elementwisely multiply latent heatmap with latent depth map
+layer {
+  bottom: "heatmap_norm"
+  #bottom: "heatmap_norm_gt"
+  bottom: "latent_depthmap"
+  #bottom: "gt_depth_map_56x56"
+  top: "elemulmap"
+  name: "elemulmap"
+  type: "Eltwise"
+  eltwise_param {
+     operation: PROD
+  }
+}
+
+#----slice to elementwisely multiplied map of all joints
+layer {
+  bottom: "elemulmap"
+  #joint 0
+  top: "elemulmap_0" 
+  top: "elemulmap_1" 
+  top: "elemulmap_2" 
+  top: "elemulmap_3" 
+  top: "elemulmap_4" 
+  top: "elemulmap_5" 
+  top: "elemulmap_6" 
+  top: "elemulmap_7" 
+  top: "elemulmap_8" 
+  top: "elemulmap_9" 
+  top: "elemulmap_10" 
+  top: "elemulmap_11" 
+  top: "elemulmap_12" 
+  top: "elemulmap_13" 
+  top: "elemulmap_14" 
+  top: "elemulmap_15" 
+  top: "elemulmap_16" 
+  top: "elemulmap_17" 
+  top: "elemulmap_18" 
+  top: "elemulmap_19" 
+  top: "elemulmap_20" 
+  name: "slice_elemulmap_to_all_joints"
+  type: "Slice"
+  slice_param {
+      axis: 1      
+	  slice_point: 1
+	  slice_point: 2
+	  slice_point: 3
+	  slice_point: 4
+	  slice_point: 5
+	  slice_point: 6
+	  slice_point: 7
+	  slice_point: 8
+	  slice_point: 9
+	  slice_point: 10
+	  slice_point: 11
+	  slice_point: 12
+	  slice_point: 13
+	  slice_point: 14
+	  slice_point: 15
+	  slice_point: 16
+	  slice_point: 17
+	  slice_point: 18
+	  slice_point: 19	  	 
+	  slice_point: 20
+  }
+}
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_0"
+  top: "elemulmap_0_reshape"
+  type: "Reshape"
+  name: "elemulmap_0_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_0"
+   bottom: "elemulmap_0_reshape"
+   top: "pred_depth_0"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_0"
+   top: "pred_depth_0_flat"
+   name: "pred_depth_0_flat"
+}
+
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_1"
+  top: "elemulmap_1_reshape"
+  type: "Reshape"
+  name: "elemulmap_1_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_1"
+   bottom: "elemulmap_1_reshape"
+   top: "pred_depth_1"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_1"
+   top: "pred_depth_1_flat"
+   name: "pred_depth_1_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_2"
+  top: "elemulmap_2_reshape"
+  type: "Reshape"
+  name: "elemulmap_2_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_2"
+   bottom: "elemulmap_2_reshape"
+   top: "pred_depth_2"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_2"
+   top: "pred_depth_2_flat"
+   name: "pred_depth_2_flat"
+}
+
+
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_3"
+  top: "elemulmap_3_reshape"
+  type: "Reshape"
+  name: "elemulmap_3_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_3"
+   bottom: "elemulmap_3_reshape"
+   top: "pred_depth_3"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_3"
+   top: "pred_depth_3_flat"
+   name: "pred_depth_3_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_4"
+  top: "elemulmap_4_reshape"
+  type: "Reshape"
+  name: "elemulmap_4_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_4"
+   bottom: "elemulmap_4_reshape"
+   top: "pred_depth_4"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_4"
+   top: "pred_depth_4_flat"
+   name: "pred_depth_4_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_5"
+  top: "elemulmap_5_reshape"
+  type: "Reshape"
+  name: "elemulmap_5_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_5"
+   bottom: "elemulmap_5_reshape"
+   top: "pred_depth_5"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_5"
+   top: "pred_depth_5_flat"
+   name: "pred_depth_5_flat"
+}
+
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_6"
+  top: "elemulmap_6_reshape"
+  type: "Reshape"
+  name: "elemulmap_6_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_6"
+   bottom: "elemulmap_6_reshape"
+   top: "pred_depth_6"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_6"
+   top: "pred_depth_6_flat"
+   name: "pred_depth_6_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_7"
+  top: "elemulmap_7_reshape"
+  type: "Reshape"
+  name: "elemulmap_7_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_7"
+   bottom: "elemulmap_7_reshape"
+   top: "pred_depth_7"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_7"
+   top: "pred_depth_7_flat"
+   name: "pred_depth_7_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_8"
+  top: "elemulmap_8_reshape"
+  type: "Reshape"
+  name: "elemulmap_8_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_8"
+   bottom: "elemulmap_8_reshape"
+   top: "pred_depth_8"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_8"
+   top: "pred_depth_8_flat"
+   name: "pred_depth_8_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_9"
+  top: "elemulmap_9_reshape"
+  type: "Reshape"
+  name: "elemulmap_9_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_9"
+   bottom: "elemulmap_9_reshape"
+   top: "pred_depth_9"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_9"
+   top: "pred_depth_9_flat"
+   name: "pred_depth_9_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_10"
+  top: "elemulmap_10_reshape"
+  type: "Reshape"
+  name: "elemulmap_10_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_10"
+   bottom: "elemulmap_10_reshape"
+   top: "pred_depth_10"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_10"
+   top: "pred_depth_10_flat"
+   name: "pred_depth_10_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_11"
+  top: "elemulmap_11_reshape"
+  type: "Reshape"
+  name: "elemulmap_11_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_11"
+   bottom: "elemulmap_11_reshape"
+   top: "pred_depth_11"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_11"
+   top: "pred_depth_11_flat"
+   name: "pred_depth_11_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_12"
+  top: "elemulmap_12_reshape"
+  type: "Reshape"
+  name: "elemulmap_12_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_12"
+   bottom: "elemulmap_12_reshape"
+   top: "pred_depth_12"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_12"
+   top: "pred_depth_12_flat"
+   name: "pred_depth_12_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_13"
+  top: "elemulmap_13_reshape"
+  type: "Reshape"
+  name: "elemulmap_13_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_13"
+   bottom: "elemulmap_13_reshape"
+   top: "pred_depth_13"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_13"
+   top: "pred_depth_13_flat"
+   name: "pred_depth_13_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_14"
+  top: "elemulmap_14_reshape"
+  type: "Reshape"
+  name: "elemulmap_14_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_14"
+   bottom: "elemulmap_14_reshape"
+   top: "pred_depth_14"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_14"
+   top: "pred_depth_14_flat"
+   name: "pred_depth_14_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_15"
+  top: "elemulmap_15_reshape"
+  type: "Reshape"
+  name: "elemulmap_15_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_15"
+   bottom: "elemulmap_15_reshape"
+   top: "pred_depth_15"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_15"
+   top: "pred_depth_15_flat"
+   name: "pred_depth_15_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_16"
+  top: "elemulmap_16_reshape"
+  type: "Reshape"
+  name: "elemulmap_16_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_16"
+   bottom: "elemulmap_16_reshape"
+   top: "pred_depth_16"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_16"
+   top: "pred_depth_16_flat"
+   name: "pred_depth_16_flat"
+}
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_17"
+  top: "elemulmap_17_reshape"
+  type: "Reshape"
+  name: "elemulmap_17_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_17"
+   bottom: "elemulmap_17_reshape"
+   top: "pred_depth_17"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_17"
+   top: "pred_depth_17_flat"
+   name: "pred_depth_17_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_18"
+  top: "elemulmap_18_reshape"
+  type: "Reshape"
+  name: "elemulmap_18_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_18"
+   bottom: "elemulmap_18_reshape"
+   top: "pred_depth_18"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_18"
+   top: "pred_depth_18_flat"
+   name: "pred_depth_18_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_19"
+  top: "elemulmap_19_reshape"
+  type: "Reshape"
+  name: "elemulmap_19_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_19"
+   bottom: "elemulmap_19_reshape"
+   top: "pred_depth_19"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_19"
+   top: "pred_depth_19_flat"
+   name: "pred_depth_19_flat"
+}
+
+
+#-----reshape to channels*1*1
+layer {
+  bottom: "elemulmap_20"
+  top: "elemulmap_20_reshape"
+  type: "Reshape"
+  name: "elemulmap_20_reshape"
+  reshape_param {
+    shape {
+	   dim: 0
+	   dim: 4096
+	   dim: 1
+	   dim: 1
+	}
+  }
+}
+
+#----add all channels (add all grids over the whole map)
+layer {
+   type: "EltAddChannels"
+   name: "elt_add_20"
+   bottom: "elemulmap_20_reshape"
+   top: "pred_depth_20"
+   elt_add_channels_param {
+     dim_lb: 0
+	 dim_ub: 4095
+   }
+}
+
+#---flatten to a vector
+layer {
+   type: "Flatten"
+   bottom: "pred_depth_20"
+   top: "pred_depth_20_flat"
+   name: "pred_depth_20_flat"
+}
+
+
+#-----concat pred depth flat 
+layer {
+   type: "Concat"
+   bottom: "pred_depth_0_flat"
+   bottom: "pred_depth_1_flat"
+   bottom: "pred_depth_2_flat"
+   bottom: "pred_depth_3_flat"
+   bottom: "pred_depth_4_flat"
+   bottom: "pred_depth_5_flat"
+   bottom: "pred_depth_6_flat"
+   bottom: "pred_depth_7_flat"
+   bottom: "pred_depth_8_flat"
+   bottom: "pred_depth_9_flat"
+   bottom: "pred_depth_10_flat"
+   bottom: "pred_depth_11_flat"
+   bottom: "pred_depth_12_flat"
+   bottom: "pred_depth_13_flat"
+   bottom: "pred_depth_14_flat"
+   bottom: "pred_depth_15_flat"
+   bottom: "pred_depth_16_flat"
+   bottom: "pred_depth_17_flat"
+   bottom: "pred_depth_18_flat"
+   bottom: "pred_depth_19_flat"
+   bottom: "pred_depth_20_flat"
+   top: "pred_joint_3d_scale_norm_rel_z"
+   name: "pred_joint_3d_scale_norm_rel_z"
+}
+
+#---recovery pred joint 2d to global
+layer {
+  #bottom: "pred_joint_2d"
+  bottom: "gt_joint_2d"
+  name: "slice_pred_joint_2d"
+  type: "Slice"
+  top: "pred_joint_2d_0_x"
+  top: "pred_joint_2d_0_y"  
+  top: "pred_joint_2d_1_x"
+  top: "pred_joint_2d_1_y"  
+  top: "pred_joint_2d_2_x"
+  top: "pred_joint_2d_2_y"  
+  top: "pred_joint_2d_3_x"
+  top: "pred_joint_2d_3_y"  
+  top: "pred_joint_2d_4_x"
+  top: "pred_joint_2d_4_y"  
+  top: "pred_joint_2d_5_x"
+  top: "pred_joint_2d_5_y"  
+  top: "pred_joint_2d_6_x"
+  top: "pred_joint_2d_6_y"  
+  top: "pred_joint_2d_7_x"
+  top: "pred_joint_2d_7_y"  
+  top: "pred_joint_2d_8_x"
+  top: "pred_joint_2d_8_y"  
+  top: "pred_joint_2d_9_x"
+  top: "pred_joint_2d_9_y"  
+  top: "pred_joint_2d_10_x"
+  top: "pred_joint_2d_10_y"
+  top: "pred_joint_2d_11_x"
+  top: "pred_joint_2d_11_y"  
+  top: "pred_joint_2d_12_x"
+  top: "pred_joint_2d_12_y"  
+  top: "pred_joint_2d_13_x"
+  top: "pred_joint_2d_13_y"  
+  top: "pred_joint_2d_14_x"
+  top: "pred_joint_2d_14_y"  
+  top: "pred_joint_2d_15_x"
+  top: "pred_joint_2d_15_y"  
+  top: "pred_joint_2d_16_x"
+  top: "pred_joint_2d_16_y"  
+  top: "pred_joint_2d_17_x"
+  top: "pred_joint_2d_17_y"
+  top: "pred_joint_2d_18_x"
+  top: "pred_joint_2d_18_y"  
+  top: "pred_joint_2d_19_x"
+  top: "pred_joint_2d_19_y"  
+  top: "pred_joint_2d_20_x"
+  top: "pred_joint_2d_20_y"    
+}
+
+layer {
+  bottom: "pred_joint_2d_0_x"
+  bottom: "pred_joint_2d_1_x"
+  bottom: "pred_joint_2d_2_x"
+  bottom: "pred_joint_2d_3_x"
+  bottom: "pred_joint_2d_4_x"
+  bottom: "pred_joint_2d_5_x"
+  bottom: "pred_joint_2d_6_x"
+  bottom: "pred_joint_2d_7_x"
+  bottom: "pred_joint_2d_8_x"
+  bottom: "pred_joint_2d_9_x"
+  bottom: "pred_joint_2d_10_x"
+  bottom: "pred_joint_2d_11_x"
+  bottom: "pred_joint_2d_12_x"
+  bottom: "pred_joint_2d_13_x"
+  bottom: "pred_joint_2d_14_x"
+  bottom: "pred_joint_2d_15_x"
+  bottom: "pred_joint_2d_16_x"
+  bottom: "pred_joint_2d_17_x"
+  bottom: "pred_joint_2d_18_x"
+  bottom: "pred_joint_2d_19_x"
+  bottom: "pred_joint_2d_20_x"
+  top: "pred_joint_2d_x"
+  name: "pred_joint_2d_x"
+  type: "Concat"
+}
+
+
+layer {
+  bottom: "pred_joint_2d_0_y"
+  bottom: "pred_joint_2d_1_y"
+  bottom: "pred_joint_2d_2_y"
+  bottom: "pred_joint_2d_3_y"
+  bottom: "pred_joint_2d_4_y"
+  bottom: "pred_joint_2d_5_y"
+  bottom: "pred_joint_2d_6_y"
+  bottom: "pred_joint_2d_7_y"
+  bottom: "pred_joint_2d_8_y"
+  bottom: "pred_joint_2d_9_y"
+  bottom: "pred_joint_2d_10_y"
+  bottom: "pred_joint_2d_11_y"
+  bottom: "pred_joint_2d_12_y"
+  bottom: "pred_joint_2d_13_y"
+  bottom: "pred_joint_2d_14_y"
+  bottom: "pred_joint_2d_15_y"
+  bottom: "pred_joint_2d_16_y"
+  bottom: "pred_joint_2d_17_y"
+  bottom: "pred_joint_2d_18_y"
+  bottom: "pred_joint_2d_19_y"
+  bottom: "pred_joint_2d_20_y"
+  top: "pred_joint_2d_y"
+  name: "pred_joint_2d_y"
+  type: "Concat"
+}
+
+#----[0, 1] * width
+layer {
+  bottom: "pred_joint_2d_x"
+  bottom: "width"
+  top: "pred_joint_2d_x_scalewidth"
+  name: "pred_joint_2d_x_scalewidth"
+  type: "ScaleVectorBySingleVector"  
+}
+
+#----- + bbx_x1 to get raw projection
+layer {
+  bottom: "pred_joint_2d_x_scalewidth"
+  bottom: "bbx_x1"
+  top: "pred_joint_2d_x_on_raw"
+  name: "pred_joint_2d_x_on_raw"
+  type: "AddVectorBySingleVector"
+}
+
+
+#----[0, 1] * height
+layer {
+  bottom: "pred_joint_2d_y"
+  bottom: "height"
+  top: "pred_joint_2d_y_scaleheight"
+  name: "pred_joint_2d_y_scaleheight"
+  type: "ScaleVectorBySingleVector"  
+}
+
+
+#----- + bbx_y1 to get raw projection
+layer {
+  bottom: "pred_joint_2d_y_scaleheight"
+  bottom: "bbx_y1"
+  top: "pred_joint_2d_y_on_raw"
+  name: "pred_joint_2d_y_on_raw"
+  type: "AddVectorBySingleVector"
+}
+
+
+#----slice pred joint 2d x on raw to ....
+layer {
+  bottom: "pred_joint_2d_x_on_raw"
+  top: "pred_joint_2d_on_raw_0_x"
+  top: "pred_joint_2d_on_raw_1_x"
+  top: "pred_joint_2d_on_raw_2_x"
+  top: "pred_joint_2d_on_raw_3_x"
+  top: "pred_joint_2d_on_raw_4_x"
+  top: "pred_joint_2d_on_raw_5_x"
+  top: "pred_joint_2d_on_raw_6_x"
+  top: "pred_joint_2d_on_raw_7_x"
+  top: "pred_joint_2d_on_raw_8_x"
+  top: "pred_joint_2d_on_raw_9_x"
+  top: "pred_joint_2d_on_raw_10_x"
+  top: "pred_joint_2d_on_raw_11_x"
+  top: "pred_joint_2d_on_raw_12_x"
+  top: "pred_joint_2d_on_raw_13_x"
+  top: "pred_joint_2d_on_raw_14_x"
+  top: "pred_joint_2d_on_raw_15_x"
+  top: "pred_joint_2d_on_raw_16_x"
+  top: "pred_joint_2d_on_raw_17_x"
+  top: "pred_joint_2d_on_raw_18_x"
+  top: "pred_joint_2d_on_raw_19_x"
+  top: "pred_joint_2d_on_raw_20_x"
+  type: "Slice"
+  slice_param {
+     axis: 1
+	 slice_point: 1
+	 slice_point: 2
+	 slice_point: 3
+	 slice_point: 4
+	 slice_point: 5
+	 slice_point: 6
+	 slice_point: 7
+	 slice_point: 8
+	 slice_point: 9
+	 slice_point: 10
+	 slice_point: 11
+	 slice_point: 12
+	 slice_point: 13
+	 slice_point: 14
+	 slice_point: 15
+	 slice_point: 16
+	 slice_point: 17
+	 slice_point: 18
+	 slice_point: 19
+	 slice_point: 20	 
+  } 
+}
+
+
+
+
+#----slice pred joint 2d x on raw to ....
+layer {
+  bottom: "pred_joint_2d_y_on_raw"
+  top: "pred_joint_2d_on_raw_0_y"
+  top: "pred_joint_2d_on_raw_1_y"
+  top: "pred_joint_2d_on_raw_2_y"
+  top: "pred_joint_2d_on_raw_3_y"
+  top: "pred_joint_2d_on_raw_4_y"
+  top: "pred_joint_2d_on_raw_5_y"
+  top: "pred_joint_2d_on_raw_6_y"
+  top: "pred_joint_2d_on_raw_7_y"
+  top: "pred_joint_2d_on_raw_8_y"
+  top: "pred_joint_2d_on_raw_9_y"
+  top: "pred_joint_2d_on_raw_10_y"
+  top: "pred_joint_2d_on_raw_11_y"
+  top: "pred_joint_2d_on_raw_12_y"
+  top: "pred_joint_2d_on_raw_13_y"
+  top: "pred_joint_2d_on_raw_14_y"
+  top: "pred_joint_2d_on_raw_15_y"
+  top: "pred_joint_2d_on_raw_16_y"
+  top: "pred_joint_2d_on_raw_17_y"
+  top: "pred_joint_2d_on_raw_18_y"
+  top: "pred_joint_2d_on_raw_19_y"
+  top: "pred_joint_2d_on_raw_20_y"
+  type: "Slice"
+  slice_param {
+     axis: 1
+	 slice_point: 1
+	 slice_point: 2
+	 slice_point: 3
+	 slice_point: 4
+	 slice_point: 5
+	 slice_point: 6
+	 slice_point: 7
+	 slice_point: 8
+	 slice_point: 9
+	 slice_point: 10
+	 slice_point: 11
+	 slice_point: 12
+	 slice_point: 13
+	 slice_point: 14
+	 slice_point: 15
+	 slice_point: 16
+	 slice_point: 17
+	 slice_point: 18
+	 slice_point: 19
+	 slice_point: 20	 
+  } 
+}
+
+#------concat to form pred joint 2d raw in right sequence
+layer {
+  bottom: "pred_joint_2d_on_raw_0_x"
+  bottom: "pred_joint_2d_on_raw_0_y"
+  bottom: "pred_joint_2d_on_raw_1_x"
+  bottom: "pred_joint_2d_on_raw_1_y"
+  bottom: "pred_joint_2d_on_raw_2_x"
+  bottom: "pred_joint_2d_on_raw_2_y"
+  bottom: "pred_joint_2d_on_raw_3_x"
+  bottom: "pred_joint_2d_on_raw_3_y"
+  bottom: "pred_joint_2d_on_raw_4_x"
+  bottom: "pred_joint_2d_on_raw_4_y"
+  bottom: "pred_joint_2d_on_raw_5_x"
+  bottom: "pred_joint_2d_on_raw_5_y"
+  bottom: "pred_joint_2d_on_raw_6_x"
+  bottom: "pred_joint_2d_on_raw_6_y"
+  bottom: "pred_joint_2d_on_raw_7_x"
+  bottom: "pred_joint_2d_on_raw_7_y"
+  bottom: "pred_joint_2d_on_raw_8_x"
+  bottom: "pred_joint_2d_on_raw_8_y"
+  bottom: "pred_joint_2d_on_raw_9_x"
+  bottom: "pred_joint_2d_on_raw_9_y"
+  bottom: "pred_joint_2d_on_raw_10_x"
+  bottom: "pred_joint_2d_on_raw_10_y"
+  bottom: "pred_joint_2d_on_raw_11_x"
+  bottom: "pred_joint_2d_on_raw_11_y"  
+  bottom: "pred_joint_2d_on_raw_12_x"
+  bottom: "pred_joint_2d_on_raw_12_y"
+  bottom: "pred_joint_2d_on_raw_13_x"
+  bottom: "pred_joint_2d_on_raw_13_y"
+  bottom: "pred_joint_2d_on_raw_14_x"
+  bottom: "pred_joint_2d_on_raw_14_y"
+  bottom: "pred_joint_2d_on_raw_15_x"
+  bottom: "pred_joint_2d_on_raw_15_y"
+  bottom: "pred_joint_2d_on_raw_16_x"
+  bottom: "pred_joint_2d_on_raw_16_y"
+  bottom: "pred_joint_2d_on_raw_17_x"
+  bottom: "pred_joint_2d_on_raw_17_y"
+  bottom: "pred_joint_2d_on_raw_18_x"
+  bottom: "pred_joint_2d_on_raw_18_y"
+  bottom: "pred_joint_2d_on_raw_19_x"
+  bottom: "pred_joint_2d_on_raw_19_y"
+  bottom: "pred_joint_2d_on_raw_20_x"
+  bottom: "pred_joint_2d_on_raw_20_y"
+  top: "pred_joint_2d_on_raw_right_seq"
+  name: "pred_joint_2d_on_raw_right_seq"
+  type: "Concat"
+}
+
+
+
+
+
+
+
+#----- * (maxz - minz)
+layer {
+  type: "ScaleVector"
+  bottom: "pred_joint_3d_scale_norm_rel_z" 
+  #bottom: "gt_rel_z_scale_norm_minus_minz_scale"
+  top: "pred_joint_3d_scale_norm_rel_z_minus_minz"  
+  name: "pred_joint_3d_scale_norm_rel_z_minus_minz"  
+  scale_vector_param {
+    scale_factor:  6.539
+  }
+}
+
+
+#-----+minz
+layer {
+   type: "AddVectorByConstant"
+   bottom: "pred_joint_3d_scale_norm_rel_z_minus_minz"
+   top: "pred_scale_norm_zkr"
+   name: "pred_joint_3d_scale_norm_rel_z_add"
+   add_vector_by_constant_param {
+      add_value: -3.26900
+   }
+}
+
+
+
+#-----Loss of 
+layer {
+  name: "joint3dloss"
+  type: "EuclideanLoss"
+  bottom: "pred_joint_3d_scale_norm_rel_z"
+  bottom: "gt_rel_z_scale_norm_minus_minz_scale"  
+  top: "joint3dloss"
+  loss_weight: 0.0
+  
+}
+#-----------
+
+#layer {
+  #bottom: "gt_rel_z_scale_norm_minus_minz_scale"  
+  #top: "neg_gt_rel_z_scale_norm_minus_minz_scale"
+  #name: "neg_gt_rel_z_scale_norm_minus_minz_scale"
+  #type: "ScaleVector"
+  #scale_vector_param {
+    #scale_factor: -1.0
+  #}
+#}
+
+#layer {
+  #bottom: "pred_joint_3d_scale_norm_rel_z"
+  #bottom: "neg_gt_rel_z_scale_norm_minus_minz_scale"
+  #top: "minus"
+  #name: "minus"
+  #type: "Eltwise"  
+#}
+
+
+
+
+
+#-----output 
+#layer {
+  #name: "output_minus"
+  #type: "OutputBlob"
+  #bottom: "minus" 
+  #bottom: "image_index"
+  #output_blob_param {
+    #save_path: "E:\\tmp\\exp\\RHDLatentHMMap\\trainminus\\"
+	#blob_name: "minus"
+  #}
+  #include {
+    #phase: TRAIN
+  #}
+#}
+
+
+#deduce scale normalized root
+#---a) joint 2d on raw projection
+#---b) global root-relative monocular camera frame 3d
+#---c) focus x
+#---d) focus y 
+#---e) u0 offset
+#---f) v0 offset
+layer {
+  bottom: "pred_joint_2d_on_raw_right_seq"
+  bottom: "pred_scale_norm_zkr"
+  bottom: "fx"
+  bottom: "fy"
+  bottom: "u0"
+  bottom: "v0"
+  top: "pred_root_z"
+  name: "pred_root_z"
+  type: "DeepHandModelSolveScaleNormalizedGlobalZRoot"
+  deep_hand_model_solve_scale_normalized_global_z_root_param {
+     joint_num: 21
+	 n: 8
+	 m: 0
+	 c: 1.0
+  }
+}
+
+#deduce scale normalized global location
+layer {
+  bottom: "pred_joint_2d_on_raw_right_seq"
+  bottom: "pred_scale_norm_zkr"
+  bottom: "fx"
+  bottom: "fy"
+  bottom: "u0"
+  bottom: "v0"
+  bottom: "pred_root_z"
+  top: "pred_scale_norm_global_location"
+  name: "pred_scale_norm_global_location"
+  type: "DeepHandModelSolveScaleNormalizedGlobalLocation"
+  deep_hand_model_solve_scale_normalized_global_location_param {
+     joint_num: 21
+  }
+}
+
+
+
+#deduce global hand scale
+layer {
+  bottom: "pred_scale_norm_global_location"
+  bottom: "avg_bone"
+  top: "global_hand_scale"
+  name: "global_hand_scale"
+  type: "DeepHandModelSolveGlobalHandScale"
+}
+
+#recover back using global hand scale
+layer {
+  type: "ScaleVectorBySingleVector"
+  bottom: "pred_scale_norm_global_location"
+  bottom: "global_hand_scale"
+  top: "pred_joint_global"
+  name: "pred_joint_global"
+}
+
+
+#----take negative of gt 3d mono (global camera frame)
+layer {
+  name: "neg_gt_joint_3d"
+  bottom: "gt_joint_3d"
+  #bottom: "gt_rel_z_scale_norm"
+  top: "neg_gt_joint_3d"
+  type: "ScaleVector"
+  scale_vector_param {
+     scale_factor: -1.0
+  }
+}
+
+
+
+#---
+layer {
+  bottom: "pred_joint_global"
+  bottom: "gt_joint_3d"
+  top: "globalloss"
+  name: "globalloss"
+  loss_weight: 0.0
+  type: "EuclideanLoss"  
+}
+
+
+#----add pred global 3d with neg gt 3d mono
+layer {
+  bottom: "pred_joint_global"
+  bottom: "neg_gt_joint_3d"
+  top: "calc"
+  name: "calc"
+  type: "Eltwise"  
+}
+
+
+
+
+#----take negative of 
+layer {
+  name: "neg_gt_joint_2d"
+  bottom: "gt_joint_2d"
+  top: "neg_gt_joint_2d"
+  type: "ScaleVector"
+  scale_vector_param {
+     scale_factor: -1.0
+  }
+}
+
+#----add pred 
+layer {
+  bottom: "pred_joint_2d"
+  bottom: "neg_gt_joint_2d"
+  top: "calc_2d"
+  name: "calc_2d"
+  type: "Eltwise"  
+}
+
+
+layer {
+  bottom: "calc_2d"
+  bottom: "calc_2d"
+  top: "calc_nothing_2d"
+  type: "EuclideanLoss"
+  loss_weight: 0.0
+}
+layer {
+  bottom: "calc"
+  bottom: "calc"
+  top: "calc_nothing"
+  type: "EuclideanLoss"
+  loss_weight: 0.0
+}
+

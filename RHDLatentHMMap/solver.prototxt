@@ -1,0 +1,14 @@
+net: "train.prototxt"
+display: 10
+base_lr: 0.000001
+#test_interval: 2000
+#test_iter: 70
+max_iter: 100000000
+lr_policy: "multistep"
+stepvalue: 600000
+stepvalue: 1500000
+gamma: 0.1
+weight_decay: 0.0002
+snapshot: 10000
+snapshot_prefix: "models/RHDLatentHMMap_"
+solver_mode: GPU
