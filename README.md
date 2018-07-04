@@ -1,6 +1,10 @@
 # RHDHand
 Implementation of paper "Hand Pose Estimation via Latent 2.5 D Heatmap Regression" for 3D pose estimation of RGB hand pose dataset RHD
 
+Preprocessed dataset has been uploaded to Google Drive at https://drive.google.com/file/d/1ahDGxYb6BmzQxRU_juv_QDFLbpHPMy29/view (~8GB)
+
+Preprocessing VS Code is VisRHDAnnotation.cpp
+
 See details about derivation of formula in ppt.
 
 About caffe experiments:
