@@ -1,14 +1,16 @@
 # RHDHand
-Implementation for 3D pose estimation of RGB hand pose dataset RHD
+Implementation of paper "Hand Pose Estimation via Latent 2.5 D Heatmap Regression" for 3D pose estimation of RGB hand pose dataset RHD
 
-Code (including preprocessing step) and data coming up soon!
+About caffe experiments:
 
-@inproceedings{zimmermann2017learning,
-  title={Learning to estimate 3d hand pose from single rgb images},
-  author={Zimmermann, Christian and Brox, Thomas},
-  booktitle={International Conference on Computer Vision},
-  year={2017}
-}
+1. RHDLatentHMMap
+
+   backbone network: ShuffleNet Model size: 4.33 MB root-relative 3D error: 25mm
+
+2. RHDLatentHMMapRawPaper
+   
+   backbone network: original conv-deconv network in paper Model size: 86.2 MB root-relative 3D error: 33mm
+
 
 @article{iqbal2018hand,
   title={Hand Pose Estimation via Latent 2.5 D Heatmap Regression},
