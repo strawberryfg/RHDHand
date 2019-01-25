@@ -3,7 +3,7 @@ Implementation of paper "Hand Pose Estimation via Latent 2.5 D Heatmap Regressio
 
 ## This page will be updated real soon.
 
-[**To begin with**] Get some sense in rhd.pdf
+[**To begin with**] Get some sense in [rhd.pdf](https://github.com/strawberryfg/RHDHand/blob/master/rhd.pdf)
 
 Preprocessed dataset has been uploaded to Google Drive at https://drive.google.com/file/d/1ahDGxYb6BmzQxRU_juv_QDFLbpHPMy29/view (~8GB)
 
